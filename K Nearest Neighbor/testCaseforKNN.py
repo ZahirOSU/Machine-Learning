@@ -2,7 +2,6 @@
 """
 Created on Tue Jun 11 12:18:36 2019
 
-@author: P01004lr
 """
 
 #KNN Test File
