@@ -2,7 +2,6 @@
 """
 Created on Fri Aug  2 10:44:33 2019
 
-@author: P01004LR
 """
 import keras
 from keras.datasets import mnist
