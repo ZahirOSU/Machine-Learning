@@ -2,7 +2,6 @@
 """
 Created on Tue Jun 11 09:55:10 2019
 
-Created by Chris Nosowsky
 """
 import nltk
 from nltk.corpus import wordnet as wn
