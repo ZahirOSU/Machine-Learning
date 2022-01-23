@@ -1,0 +1,62 @@
+ %signal specification
+ b=0;
+ fo = 77e9;
+ alpha = 60e12;
+ c = 2.3e8;
+ An = 1;  % We assumed An as 1.
+ dt = 5.33e-8;
+ N= 7; %we assume that the number of target is seven
+ to = 5.7e-6;
+  
+% Building the model
+
+learningRate = 0.001;
+ 
+ 
+% Storing the values in  matrices  
+filename = 'C:/Users/Bobby/Desktop/signal.csv';
+M = readtable(filename);
+M = M{:,:};
+M(isnan(M))=0;
+M(:,2) = M(:,2)*1i; %change the second column to imagenary
+S = [sum(M(:,[1 2]),2)]; % sum img and real
+S(isnan(S)) = 0;
+
+% Initialize the Rn vector
+rng('default')
+a = 0;
+b = 1;
+rm = (b-a).*rand(10,1) + a;
+ 
+%rm = rand(r,1);
+
+
+%%%%%%%%%%%%%%%
+% Getting the length of our dataset
+
+n = length(S);
+
+% Creating a matrix of zeros for storing our cost function history
+
+costHistory = zeros(n, 1);
+ 
+ 
+for m = 1:n       
+    t = to + m*dt;
+    S_pred =  sum(exp(1i*rm.*4*pi*(fo + alpha*t)/c))  ;  % The current predicted value of S
+    
+    divr = (1i*4*pi*(fo + alpha*t)/c)* sum(exp(1i*rm*4*pi*(fo + alpha*t)/c))   ; % partial derivative  wrt r
+        
+    D_r =  (-2) * (divr * (real(S(m))  - S_pred));  
+     
+    
+    rm = rm - learningRate * D_r;  % Update r
+    
+    
+   %costHistory(m) = sum((real(S(m))  - S_pred)^2) ;         
+%    costHistory(i) = (S_pred - S)' * (S_pred - S) ; 
+ end 
+ 
+ 
+
+% Running gradient descent
