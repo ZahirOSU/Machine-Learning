@@ -1,0 +1,18 @@
+You have matrix sub in each nonzero element the mean of the same column then normalize the matrix
+
+import numpy as np
+
+x =  (  [[3, 0, 0], 
+        [0, 4, 1], 
+        [5, 6, 0]])
+
+A = np.array(x)
+out_tpl = np.true_divide(A.sum(0),(A!=0).sum(0))
+row,column = A.shape 
+
+for x in range(row):
+    for y in range(column):
+        if (A[x][y] ==0):
+            A[x][y] = out_tpl[y]
+print((A - A.mean())/A.var())
+
