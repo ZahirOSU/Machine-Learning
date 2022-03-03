@@ -1,0 +1,39 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.model_selection import train_test_split
+import os
+
+df = pd.read_csv(data_path)#, names=column_names)
+
+Inspecting the dataset
+DataFrame.info() // Print a concise summary of a DataFrame.
+df.describe() // The variables count, mean, std and max are self-explanatory
+
+Removing duplicated data points
+df.drop_duplicates(keep='first', inplace=True)
+
+Visualizing aspects of the dataset
+df.hist(bins=50, figsize=(25, 20)) //The histograms will also make it easier to detect outliers or erroneous values
+plt.show()
+
+
+Creating a test set is very easy using scikit-learn. We will use 20% of the data as a test set.
+original_train_df, test_df = train_test_split(df, test_size=0.2)
+train_df = original_train_df.copy() # To be sure we will create a copy for further processing
+
+Gaining further insight
+correlation_matrix = train_df.corr(method='pearson')
+
+Handling missing data
+names = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'] // features
+for name in names:
+    train_df[name].replace(0, np.nan, inplace=True)
+/// Replace the missing values, for example with the median of the corresponding attribute
+glucose_median = train_df["Glucose"].median()
+blood_pressure_median = train_df["BloodPressure"].median()
+train_df["Glucose"].fillna(glucose_median, inplace=True)
+train_df["BloodPressure"].fillna(blood_pressure_median, inplace=True)
+
+
+
